@@ -76,13 +76,14 @@ def sso_payload(secret, **kwargs):
     return query_string
 
 
-def sso_redirect_url(nonce, secret, email, external_id, username, **kwargs):
+def sso_redirect_url(nonce, secret, email, external_id, username, avatar_url, **kwargs):
     """
         nonce: returned by sso_validate()
         secret: the secret key you entered into Discourse sso secret
         user_email: email address of the user who logged in
         user_id: the internal id of the logged in user
         user_username: username of the logged in user
+        avatar_url: avatar url of the logged in user
 
         return value: URL to redirect users back to discourse, now logged in as user_username
     """
@@ -90,7 +91,8 @@ def sso_redirect_url(nonce, secret, email, external_id, username, **kwargs):
         'nonce': nonce,
         'email': email,
         'external_id': external_id,
-        'username': username
+        'username': username,
+        'avatar_url': avatar_url
     })
 
     return '/session/sso_login?%s' % sso_payload(secret, **kwargs)
